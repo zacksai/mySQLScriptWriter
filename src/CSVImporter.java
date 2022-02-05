@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -24,10 +22,6 @@ public class CSVImporter {
     public static void main(String[] args) {
 
 
-
-
-
-
         // Step 2: iterate through each file path
         // Step 2a: read in first line of each file
         // Step 2b: create a table import statement out of each line
@@ -38,6 +32,7 @@ public class CSVImporter {
         // Create console input scanner and file name stack
         Scanner keys = new Scanner(System.in);
         Stack<String> fileNames = new Stack<>();
+
 
         promptForInput(keys, fileNames);
         readEachFile(fileNames);
@@ -51,13 +46,21 @@ public class CSVImporter {
         String lineRead = "", outputScript = "";
 
         // Iterate through file names
-        while (!fileNames.empty()){
+        while (!fileNames.empty()) {
 
             // Create a fileReader and create a script string
             try {
-                FileReader csvReader = new FileReader(fileNames.pop());
+                String file = fileNames.pop();
+                BufferedReader csvReader = new BufferedReader(new FileReader(new File(file)));
+                System.out.println("csvReader initialize successful");
+
+                lineRead = csvReader.readLine();
+
             } catch (FileNotFoundException e) {
                 System.out.println("Error: This file isn't in the directory: " + fileNames.pop());
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println("Error: No lines in the file: " + fileNames.pop());
                 e.printStackTrace();
             }
         }
@@ -83,10 +86,12 @@ public class CSVImporter {
             // Prompt for input and add it to the stack
             System.out.println("Paste the next CSV here, or type \"exit\" to exit.");
             nextFilePasted = consoleInput.nextLine();
-            // Test message System.out.println("NextFilePasted = " + nextFilePasted);
-            fileNames.push(nextFilePasted);
-        }
 
+            if (nextFilePasted != "exit") fileNames.push(nextFilePasted);
+            else break;
+
+        }
+        fileNames.pop();
         System.out.println("Thanks for your input. Creating your script...");
 
     }
