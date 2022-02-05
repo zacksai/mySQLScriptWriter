@@ -1,0 +1,104 @@
+CREATE TABLE sub_sample_food(fdc_id INT NOT NULL, fdc_id_of_sample_food INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/sub_sample_food.csv' INTO TABLE sub_sample_food FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE sr_legacy_food(fdc_id INT NOT NULL, NDB_number INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/sr_legacy_food.csv' INTO TABLE sr_legacy_food FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE market_acquisition(fdc_id INT NOT NULL, brand_description VARCHAR(250) NOT NULL, expiration_date DATETIME NOT NULL, label_weight VARCHAR(250) NOT NULL, location VARCHAR(250) NOT NULL, acquisition_date VARCHAR(250) NOT NULL, sales_type VARCHAR(250) NOT NULL, sample_lot_nbr VARCHAR(250) NOT NULL, sell_by_date VARCHAR(250) NOT NULL, store_city VARCHAR(250) NOT NULL, store_name VARCHAR(250) NOT NULL, store_state VARCHAR(250) NOT NULL, upc_code INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/market_acquisition.csv' INTO TABLE market_acquisition FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_nutrient_conversion_factor(id INT NOT NULL, fdc_id INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_nutrient_conversion_factor.csv' INTO TABLE food_nutrient_conversion_factor FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_component(id INT NOT NULL, fdc_id INT NOT NULL, name VARCHAR(250) NOT NULL, pct_weight DOUBLE NOT NULL, is_refuse VARCHAR(250) NOT NULL, gram_weight DOUBLE NOT NULL, data_points INT NOT NULL, min_year_acquired VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_component.csv' INTO TABLE food_component FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_calorie_conversion_factor(food_nutrient_conversion_factor_id INT NOT NULL, protein_value DOUBLE NOT NULL, fat_value DOUBLE NOT NULL, carbohydrate_value DOUBLE NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_calorie_conversion_factor.csv' INTO TABLE food_calorie_conversion_factor FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE acquisition_samples(fdc_id_of_sample_food INT NOT NULL, fdc_id_of_acquisition_food INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/acquisition_samples.csv' INTO TABLE acquisition_samples FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE survey_fndds_food(fdc_id INT NOT NULL, food_code INT NOT NULL, wweia_category_code INT NOT NULL, start_date DATETIME NOT NULL, end_date DATETIME NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/survey_fndds_food.csv' INTO TABLE survey_fndds_food FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE retention_factor(id INT NOT NULL, code INT NOT NULL, food_group_id INT NOT NULL, description VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/retention_factor.csv' INTO TABLE retention_factor FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE nutrient(id INT NOT NULL, name VARCHAR(250) NOT NULL, unit_name VARCHAR(250) NOT NULL, nutrient_nbr INT NOT NULL, nutrient_rank DOUBLE NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/nutrient.csv' INTO TABLE nutrient FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE nutrient_incoming_name(id INT NOT NULL, name VARCHAR(250) NOT NULL, nutrient_id INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/nutrient_incoming_name.csv' INTO TABLE nutrient_incoming_name FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE lab_method(id INT NOT NULL, description VARCHAR(250) NOT NULL, technique VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/lab_method.csv' INTO TABLE lab_method FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE lab_method_nutrient(id INT NOT NULL, lab_method_id INT NOT NULL, nutrient_id INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/lab_method_nutrient.csv' INTO TABLE lab_method_nutrient FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_protein_conversion_factor(food_nutrient_conversion_factor_id INT NOT NULL, value DOUBLE NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_protein_conversion_factor.csv' INTO TABLE food_protein_conversion_factor FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE agricultural_samples(fdc_id INT NOT NULL, acquisition_date DATETIME NOT NULL, market_class VARCHAR(250) NOT NULL, treatment VARCHAR(250) NOT NULL, state VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/agricultural_samples.csv' INTO TABLE agricultural_samples FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE sample_food(fdc_id INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/sample_food.csv' INTO TABLE sample_food FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE measure_unit(id INT NOT NULL, name VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/measure_unit.csv' INTO TABLE measure_unit FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE lab_method_code(id INT NOT NULL, lab_method_id INT NOT NULL, code VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/lab_method_code.csv' INTO TABLE lab_method_code FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE foundation_food(fdc_id INT NOT NULL, NDB_number INT NOT NULL, footnote VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/foundation_food.csv' INTO TABLE foundation_food FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_nutrient_derivation(id INT NOT NULL, code VARCHAR(250) NOT NULL, description VARCHAR(250) NOT NULL, source_id INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_nutrient_derivation.csv' INTO TABLE food_nutrient_derivation FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE fndds_derivation(SR_28_derivation_code VARCHAR(250) NOT NULL, SR_28_derivation_description VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/fndds_derivation.csv' INTO TABLE fndds_derivation FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE wweia_food_category(wweia_food_category INT NOT NULL, wweia_food_category_description VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/wweia_food_category.csv' INTO TABLE wweia_food_category FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_attribute_type(id INT NOT NULL, name VARCHAR(250) NOT NULL, description VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_attribute_type.csv' INTO TABLE food_attribute_type FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE all_downloaded_table_record_counts(TableName VARCHAR(250) NOT NULL,Number_of_Records VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/all_downloaded_table_record_counts.csv' INTO TABLE all_downloaded_table_record_counts FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_category(id INT NOT NULL, food_category_code INT NOT NULL, food_category_description VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_category.csv' INTO TABLE food_category FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_nutrient_source(id INT NOT NULL, code INT NOT NULL, description VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_nutrient_source.csv' INTO TABLE food_nutrient_source FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+

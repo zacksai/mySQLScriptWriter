@@ -1,0 +1,32 @@
+CREATE TABLE food_nutrient(id INT NOT NULL, fdc_id INT NOT NULL, nutrient_id INT NOT NULL, amount INT NOT NULL, data_points INT NOT NULL, derivation_id INT NOT NULL, min INT NOT NULL, max INT NOT NULL, median INT NOT NULL, loq INT NOT NULL, footnote VARCHAR(250) NOT NULL, min_year_acquired DATETIME NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_nutrient.csv' INTO TABLE food_nutrient FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE branded_food(fdc_id INT NOT NULL, brand_owner VARCHAR(250) NOT NULL, brand_name VARCHAR(250) NOT NULL, subbrand_name VARCHAR(250) NOT NULL, gtin_upc INT NOT NULL, ingredients VARCHAR(250) NOT NULL, not_a_significant_source_of VARCHAR(250) NOT NULL, serving_size DOUBLE NOT NULL, serving_size_unit VARCHAR(250) NOT NULL, household_serving_fulltext VARCHAR(250) NOT NULL, branded_food_category VARCHAR(250) NOT NULL, data_source VARCHAR(250) NOT NULL, package_weight DOUBLE NOT NULL, modified_date DATETIME NOT NULL, available_date DATETIME NOT NULL, market_country VARCHAR(250) NOT NULL, discontinued_date DATETIME NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/branded_food.csv' INTO TABLE branded_food FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE sub_sample_result(food_nutrient_id INT NOT NULL, adjusted_amount VARCHAR(250) NOT NULL, lab_method_id INT NOT NULL, nutrient_name VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/sub_sample_result.csv' INTO TABLE sub_sample_result FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE input_food(id INT NOT NULL, fdc_id INT NOT NULL, fdc_of_input_food INT NOT NULL, seq_num INT NOT NULL, amount INT NOT NULL, sr_code INT NOT NULL, sr_description VARCHAR(250) NOT NULL, unit VARCHAR(250) NOT NULL, portion_code INT NOT NULL, portion_description VARCHAR(250) NOT NULL, gram_weight DOUBLE NOT NULL, retention_code INT NOT NULL, survey_flag VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/input_food.csv' INTO TABLE input_food FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_portion(id INT NOT NULL, fdc_id INT NOT NULL, seq_num INT NOT NULL, amount DOUBLE NOT NULL, measure_unit_id INT NOT NULL, portion_description VARCHAR(250) NOT NULL, modifier VARCHAR(250) NOT NULL, gram_weight DOUBLE NOT NULL, data_points INT NOT NULL, footnote VARCHAR(250) NOT NULL, min_year_acquired DATETIME NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_portion.csv' INTO TABLE food_portion FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_attribute(id INT NOT NULL, fdc_id INT NOT NULL, seq_num INT NOT NULL, food_attribute_type_id VARCHAR(250) NOT NULL, name VARCHAR(250) NOT NULL, value INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_attribute.csv' INTO TABLE food_attribute FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE fndds_ingredient_nutrient_value(Ingredient_code,SR_description,Nutrient_code,Nutrient_value,Nutrient_value_source,Derivation_code,SR_AddMod_year,Start_date,End_date,,, INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/fndds_ingredient_nutrient_value.csv' INTO TABLE fndds_ingredient_nutrient_value FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_update_log_entry(id INT NOT NULL, description VARCHAR(250) NOT NULL, last_updated DATETIME NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_update_log_entry.csv' INTO TABLE food_update_log_entry FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+

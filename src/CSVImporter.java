@@ -46,6 +46,13 @@ public class CSVImporter {
 
         // Create strings to contain line read and output script
         String lineRead = "", secondLineRead = "", outputScript = "";
+        BufferedWriter outputWriter = null;
+        try {
+            outputWriter = new BufferedWriter(new FileWriter("Script.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         // Iterate through each file provided
         while (!fileNames.empty()) {
@@ -60,7 +67,7 @@ public class CSVImporter {
                 lineRead = csvReader.readLine();
                 secondLineRead = csvReader.readLine();
 
-                String[] columns = lineRead.split(",");
+                String[] columns = lineRead.split("\",\"");
 
                 // Create table name from filePath
                 String tableName = filePath.substring(filePath.lastIndexOf("/") + 1,
@@ -69,7 +76,11 @@ public class CSVImporter {
                 // Confirm table name and ask to rename
                 System.out.println("Creating table: " + tableName +
                         "\n > Press 1 to rename or anything else to continue.");
-                String renameChoice = consoleInput.nextLine();
+                String renameChoice = "";
+                renameChoice = consoleInput.nextLine();
+                renameChoice = consoleInput.nextLine();
+
+
                 if (renameChoice.equals("1")) {
                     System.out.println("What would you like to name this table?");
                     tableName = consoleInput.nextLine().replaceAll(" ", "_");
@@ -82,18 +93,21 @@ public class CSVImporter {
 
                 // Iterate through each column and ask for data type
                 for (int i = 0; i < columns.length; i++) {
-                    columns[i] = columns[i].substring(1, columns[i].length()-1);
+                    System.out.println("Line Read: " + lineRead);
+                    System.out.println("Column pos: " + columns[i]);
+                    columns[i] = columns[i].replaceAll(" ", "_");
+                    columns[i] = columns[i].replaceAll("\"", "");
 
                     // Ask user what data type and fill in accordingly
                     System.out.println("\nData type for " + columns[i] + "?" +
-                            "\n1: VARCHAR(250) \n2: INT \n3: DOUBLE \n4: DATETIME" +
-                            "\n Second Line:" + secondLineRead);
+                            "\n1: INT \n2: VARCHAR(250) \n3: DOUBLE \n4: DATETIME" +
+                            "\n1st Line: " +  lineRead + "\nSecond Line: " + secondLineRead);
                     switch (consoleInput.next()) {
                         case "1":
-                            outputScript += columns[i] + " VARCHAR(250) ";
+                            outputScript += columns[i] + " INT ";
                             break;
                         case "2":
-                            outputScript += columns[i] + " INT ";
+                            outputScript += columns[i] + " VARCHAR(250) ";
                             break;
                         case "3":
                             outputScript += columns[i] + " DOUBLE ";
@@ -106,7 +120,9 @@ public class CSVImporter {
                             outputScript += columns[i] + "VARCHAR(250) ";
                             break;
                     }
+                    outputScript += "NOT NULL, ";
 
+                    /*
                     // Prompt for non-null
                     System.out.println("\nNon Null?\n1: yes \n2: no");
                     switch (consoleInput.next()) {
@@ -121,19 +137,20 @@ public class CSVImporter {
                             outputScript += ", ";
                             break;
                     }
+                    */
+
 
                 }
 
                 // Complete output script
                 outputScript = outputScript.substring(0, outputScript.length() - 2) + ");\n\n" +
-                "LOAD DATA LOCAL INFILE \'" + filePath + "\' INTO TABLE " + tableName +
+                        "LOAD DATA LOCAL INFILE \'" + filePath + "\' INTO TABLE " + tableName +
                         " FIELDS TERMINATED BY \',\' ENCLOSED BY \'\"\' LINES TERMINATED BY '\\n' IGNORE 1 LINES;\n\n";
 
                 // Write to file
                 System.out.println("\nScript prepared.\n" + outputScript);
-                BufferedWriter outputWriter = new BufferedWriter(new FileWriter("Script.txt"));
                 outputWriter.append(outputScript);
-                outputWriter.close();
+
 
             } catch (FileNotFoundException e) {
                 System.out.println("Error: This file isn't in the directory: " + fileNames.pop());
@@ -142,6 +159,11 @@ public class CSVImporter {
                 System.out.println("Error: No lines in the file: " + fileNames.pop());
                 e.printStackTrace();
             }
+        }
+        try {
+            outputWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -159,18 +181,15 @@ public class CSVImporter {
         // Create string to store input
         String nextFilePasted = "";
 
-        // Continue loop until prompted to exit
-        while (!nextFilePasted.equals("exit")) {
 
-            // Prompt for input and add it to the stack
-            System.out.println("Paste the next CSV here, or type \"exit\" to exit.");
-            nextFilePasted = consoleInput.nextLine();
+        // Prompt for input and add it to the stack
+        System.out.println("Paste CSV's here, separated by \"%\"");
+        String[] filePaths = consoleInput.nextLine().split("%");
 
-            if (nextFilePasted != "exit") fileNames.push(nextFilePasted);
-            else break;
-
+        for (int i = 0; i < filePaths.length; i ++){
+            fileNames.push(filePaths[i]);
         }
-        fileNames.pop();
+
         System.out.println("Thanks for your input. Creating your script...\n");
 
     }

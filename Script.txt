@@ -1,0 +1,4 @@
+CREATE TABLE fndds_ingredient_nutrient_value(Ingredient_code INT NOT NULL, SR_description VARCHAR(250) NOT NULL, Nutrient_code INT NOT NULL, Nutrient_value DOUBLE NOT NULL, Nutrient_value_source VARCHAR(250) NOT NULL, Derivation_code INT NOT NULL, SR_AddMod_year INT NOT NULL, Start_date DATETIME NOT NULL, End_date DATETIME NOT NULL, x VARCHAR(250) NOT NULL, y VARCHAR(250) NOT NULL, z VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/fndds_ingredient_nutrient_value.csv' INTO TABLE fndds_ingredient_nutrient_value FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
