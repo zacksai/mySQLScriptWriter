@@ -1,4 +1,12 @@
-CREATE TABLE fndds_ingredient_nutrient_value(Ingredient_code INT NOT NULL, SR_description VARCHAR(250) NOT NULL, Nutrient_code INT NOT NULL, Nutrient_value DOUBLE NOT NULL, Nutrient_value_source VARCHAR(250) NOT NULL, Derivation_code INT NOT NULL, SR_AddMod_year INT NOT NULL, Start_date DATETIME NOT NULL, End_date DATETIME NOT NULL, x VARCHAR(250) NOT NULL, y VARCHAR(250) NOT NULL, z VARCHAR(250) NOT NULL);
+CREATE TABLE food_attribute(id INT NOT NULL, fdc_id INT NOT NULL, seq_num VARCHAR(250) NOT NULL, food_attribute_type_id VARCHAR(250) NOT NULL, name VARCHAR(250) NOT NULL, value INT NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_attribute.csv' INTO TABLE food_attribute FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE fndds_ingredient_nutrient_value(Ingredient_code INT NOT NULL, SR_description VARCHAR(250) NOT NULL, Nutrient_code INT NOT NULL, Nutrient_value DOUBLE NOT NULL, Nutrient_value_source VARCHAR(250) NOT NULL, Derivation_code VARCHAR(250) NOT NULL, SR_AddMod_year VARCHAR(250) NOT NULL, Start_date VARCHAR(250) NOT NULL, End_date VARCHAR(250) NOT NULL,  VARCHAR(250) NOT NULL,  VARCHAR(250) NOT NULL,  VARCHAR(250) NOT NULL);
 
 LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/fndds_ingredient_nutrient_value.csv' INTO TABLE fndds_ingredient_nutrient_value FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+CREATE TABLE food_update_log_entry(id INT NOT NULL, description VARCHAR(250) NOT NULL, last_updated VARCHAR(250) NOT NULL);
+
+LOAD DATA LOCAL INFILE '/Users/zacksai/Documents/WIT/FoodData_Central_csv_2021-10-28/food_update_log_entry.csv' INTO TABLE food_update_log_entry FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
 
